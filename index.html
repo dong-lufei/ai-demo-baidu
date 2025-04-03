@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>百度一下，你就知道</title>
+  <meta name="description" content="全球领先的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。" />
+  <link rel="icon" href="https://www.baidu.com/favicon.ico" type="image/x-icon" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header Styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 24px 0;
+      height: 60px;
+    }
+
+    .header-left {
+      display: flex;
+      gap: 24px;
+    }
+
+    .header-left a {
+      font-size: 13px;
+      color: #222;
+      text-decoration: none;
+      height: 24px;
+      line-height: 24px;
+    }
+
+    .header-left a:hover {
+      color: #4e6ef2;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .settings-btn {
+      color: #222;
+      font-size: 13px;
+      text-decoration: none;
+      height: 24px;
+      line-height: 24px;
+    }
+
+    .login-btn {
+      background-color: #4e6ef2;
+      color: #fff;
+      padding: 4px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-decoration: none;
+      height: 32px;
+      line-height: 24px;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: -60px;
+    }
+
+    .logo-container {
+      margin-bottom: 36px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 270px;
+      height: auto;
+    }
+
+    /* Search Box Styles */
+    .search-container {
+      width: 100%;
+      max-width: 654px;
+      display: flex;
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .search-box {
+      flex: 1;
+      height: 44px;
+      border: 2px solid #4e6ef2;
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      padding: 7px 16px;
+      font-size: 16px;
+      outline: none;
+      color: #222;
+      caret-color: #4e6ef2;
+    }
+
+    .search-box:focus {
+      border-color: #4e6ef2;
+    }
+
+    .search-icon-container {
+      position: absolute;
+      right: 120px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .search-icon {
+      cursor: pointer;
+      opacity: 0.6;
+      width: 20px;
+      height: 20px;
+    }
+
+    .search-icon:hover {
+      opacity: 1;
+    }
+
+    .search-button {
+      width: 108px;
+      height: 44px;
+      background-color: #4e6ef2;
+      color: white;
+      border: none;
+      border-radius: 0 10px 10px 0;
+      font-size: 17px;
+      cursor: pointer;
+      font-weight: normal;
+    }
+
+    .search-button:hover {
+      background-color: #4662D9;
+    }
+
+    /* AI Feature Styles */
+    .ai-feature {
+      width: 100%;
+      max-width: 654px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .ai-link {
+      display: flex;
+      align-items: center;
+      color: #4e6ef2;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      background-color: #f5f5f6;
+    }
+
+    .ai-link:hover {
+      background-color: #f0f1f2;
+    }
+
+    .ai-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+
+    .ai-text {
+      margin-right: 6px;
+      color: #333;
+    }
+
+    .ai-arrow {
+      font-size: 14px;
+      margin-left: 4px;
+      color: #4e6ef2;
+    }
+
+    /* Trending Section Styles */
+    .trending-section {
+      width: 100%;
+      max-width: 654px;
+      background-color: #f5f5f6;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .trending-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .trending-title {
+      font-size: 14px;
+      color: #222;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .trending-title::after {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-image: url('https://ext.same-assets.com/4189849509/2563901416.svg');
+      background-size: contain;
+      margin-left: 4px;
+      opacity: 0.6;
+    }
+
+    .trending-refresh {
+      font-size: 13px;
+      color: #9195a3;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .trending-refresh::before {
+      content: "换一换";
+    }
+
+    .trending-refresh:hover {
+      color: #4e6ef2;
+    }
+
+    .trending-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 30px;
+    }
+
+    .trending-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .item-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      margin-right: 8px;
+      font-size: 14px;
+      color: #9195a3;
+      font-style: italic;
+      font-family: Arial, sans-serif;
+      font-weight: 500;
+      user-select: none;
+    }
+
+    .item-number.top {
+      color: #fe2d46;
+      font-weight: bold;
+    }
+
+    .item-number.second {
+      color: #ff6e0c;
+      font-weight: bold;
+    }
+
+    .item-number.third {
+      color: #faa90e;
+      font-weight: bold;
+    }
+
+    .item-text {
+      font-size: 14px;
+      color: #222;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .item-text:hover {
+      color: #315efb;
+    }
+
+    .item-tag {
+      font-size: 12px;
+      padding: 0px 4px;
+      margin-left: 4px;
+      border-radius: 4px;
+      color: white;
+      flex-shrink: 0;
+      line-height: 1.5;
+    }
+
+    .item-tag.hot {
+      background-color: #ff9812;
+    }
+
+    .item-tag.new {
+      background-color: #ff3852;
+    }
+
+    /* Footer Styles */
+    .footer {
+      width: 100%;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: auto;
+      font-size: 12px;
+      color: #999;
+      border-top: 1px solid #f5f5f6;
+    }
+
+    .footer-links {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #999;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 12px;
+    }
+
+    .footer-links a:hover {
+      color: #222;
+    }
+
+    .footer-text {
+      color: #999;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <!-- <script type="module" src="/src/main.ts"></script> -->
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const root = document.getElementById('root');
+
+      if (root) {
+        root.innerHTML = `
+      <div class="container">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-left">
+            <a href="#">新闻</a>
+            <a href="#">hao123</a>
+            <a href="#">地图</a>
+            <a href="#">贴吧</a>
+            <a href="#">视频</a>
+            <a href="#">图片</a>
+            <a href="#">网盘</a>
+            <a href="#">文库</a>
+            <a href="#">AI+</a>
+            <a href="#">更多</a>
+          </div>
+          <div class="header-right">
+            <a href="#" class="settings-btn">设置</a>
+            <a href="#" class="login-btn">登录</a>
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+          <div class="logo-container">
+            <img src="https://ext.same-assets.com/4189849509/304369145.png" alt="Baidu Logo" class="logo">
+          </div>
+
+          <div class="search-container">
+            <input type="text" class="search-box" aria-label="百度搜索" autocomplete="off">
+            <div class="search-icon-container">
+              <img src="https://ext.same-assets.com/3033477576/3685993204.png" alt="Voice Search" class="search-icon voice-icon">
+              <img src="https://ext.same-assets.com/3033477576/905459280.png" alt="Image Search" class="search-icon image-icon">
+            </div>
+            <button class="search-button">百度一下</button>
+          </div>
+
+          <div class="ai-feature">
+            <a href="#" class="ai-link">
+              <img src="https://ext.same-assets.com/4189849509/2563901416.svg" alt="AI Icon" class="ai-icon">
+              <span class="ai-text">AI搜索DeepSeek 今已解决3621725个问题</span>
+              <span class="ai-arrow">→</span>
+            </a>
+          </div>
+
+          <div class="trending-section">
+            <div class="trending-header">
+              <div class="trending-title">百度热搜</div>
+              <div class="trending-refresh"></div>
+            </div>
+            <div class="trending-grid">
+              <div class="trending-item">
+                <div class="item-number top">1</div>
+                <a href="#" class="item-text">领导干部要扑下身子深入群众</a>
+              </div>
+              <div class="trending-item">
+                <div class="item-number">5</div>
+                <a href="#" class="item-text">68岁退休厅官被查 曾是网红官员</a>
+                <span class="item-tag hot">热</span>
+              </div>
+              <div class="trending-item">
+                <div class="item-number second">2</div>
+                <a href="#" class="item-text">亚冬会信息系统遭境外攻击超27万次</a>
+              </div>
+              <div class="trending-item">
+                <div class="item-number">6</div>
+                <a href="#" class="item-text">特朗普宣布国家紧急状态</a>
+                <span class="item-tag hot">热</span>
+              </div>
+              <div class="trending-item">
+                <div class="item-number third">3</div>
+                <a href="#" class="item-text">中方将反制美国所谓对等关税</a>
+                <span class="item-tag new">新</span>
+              </div>
+              <div class="trending-item">
+                <div class="item-number">7</div>
+                <a href="#" class="item-text">A股低开高走 沪指翻红</a>
+              </div>
+              <div class="trending-item">
+                <div class="item-number">4</div>
+                <a href="#" class="item-text">我国将多措并举减轻企业负担</a>
+              </div>
+              <div class="trending-item">
+                <div class="item-number">8</div>
+                <a href="#" class="item-text">孟子坤回应出轨</a>
+                <span class="item-tag hot">热</span>
+              </div>
+              <div class="trending-item">
+                <div class="item-number">9</div>
+                <a href="#" class="item-text">菲称若台海冲突菲将卷入 中方回应</a>
+              </div>
+              <div class="trending-item">
+                <div class="item-number">10</div>
+                <a href="#" class="item-text">知名华裔教授王晓峰失联两周</a>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+          <div class="footer-links">
+            <a href="#">关于百度</a>
+            <a href="#">About Baidu</a>
+            <a href="#">使用百度前必读</a>
+            <a href="#">帮助中心</a>
+            <a href="#">企业推广</a>
+            <a href="#">京公网安备11000002000001号</a>
+            <a href="#">京ICP证030173号</a>
+          </div>
+          <div class="footer-text">©2025 Baidu</div>
+        </footer>
+      </div>
+    `;
+      }
+
+      // Add event listeners
+      const searchBox = document.querySelector('.search-box');
+      const searchButton = document.querySelector('.search-button');
+
+      if (searchBox) {
+        searchBox.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && searchBox.value.trim()) {
+            alert('搜索功能仅作展示，不会执行实际搜索');
+          }
+        });
+      }
+
+      if (searchButton) {
+        searchButton.addEventListener('click', () => {
+          if (searchBox?.value.trim()) {
+            alert('搜索功能仅作展示，不会执行实际搜索');
+          }
+        });
+      }
+
+      const trendingRefresh = document.querySelector('.trending-refresh');
+      if (trendingRefresh) {
+        trendingRefresh.addEventListener('click', () => {
+          alert('换一换功能仅作展示，不会执行实际刷新');
+        });
+      }
+
+      const voiceIcon = document.querySelector('.voice-icon');
+      if (voiceIcon) {
+        voiceIcon.addEventListener('click', () => {
+          alert('语音搜索功能仅作展示，不会执行实际操作');
+        });
+      }
+
+      const imageIcon = document.querySelector('.image-icon');
+      if (imageIcon) {
+        imageIcon.addEventListener('click', () => {
+          alert('图片搜索功能仅作展示，不会执行实际操作');
+        });
+      }
+    });
+
+  </script>
+</body>
+
+</html>
